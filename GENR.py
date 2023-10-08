@@ -1,24 +1,12 @@
-from cx_Freeze import setup, Executable
-import sys
+from fpdf import FPDF
+import os
 
-build_exe_options = {
-    "packages": ["PyQt5.QtCore", "PyQt5.QtGui", "PyQt5.QtWidgets"],
-    "includes": ["atexit"],
-    "include_files": ["placeholder.png"],  # Include any additional files
-}
-
-base = None
-if sys.platform == "win32":
-    base = "Win32GUI"
-
-executables = [
-    Executable("C:\Users\bassem\Desktop\IMG TO PFD\IMG TO PDF BSM\fils.py", base=base, icon="fils.ico")  # Replace with your script and icon
-]
-
-setup(
-    name="BSM",
-    version="1.0",
-    description="Your application description",
-    options={"build_exe": build_exe_options},
-    executables=executables
-)
+pdf=FPDF()
+pdf.set_auto_page_break(0)
+img_list=[x for x in os.listdir("feb")]
+for img in img_list:
+    pdf.add_page()
+    image="feb\\"+img
+    pdf.image(image,w=200,h=260)
+pdf.output("palsfa.pdf")
+print("completed...........")
